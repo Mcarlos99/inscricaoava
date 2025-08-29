@@ -1,6 +1,7 @@
 <?php
 /**
- * Versão atualizada do process_prematricula.php que inclui o campo polo do aluno
+ * Versão final do process_prematricula.php que garante que tanto alunos quanto
+ * administradores recebam e-mails pelo mesmo método SMTP
  */
 
 // Permitir acesso de qualquer origem (CORS)
@@ -31,7 +32,6 @@ $categoryId = (int)$_POST['categoryId'] ?? 0;
 $categoryName = $_POST['categoryName'] ?? '';
 $poloId = $_POST['poloId'] ?? '';
 $poloName = $_POST['poloName'] ?? '';
-$studentPolo = $_POST['studentPolo'] ?? ''; // NOVO CAMPO
 
 // Registrar os dados recebidos no log (para diagnóstico)
 $requestLog = "==== REQUISIÇÃO (" . date('Y-m-d H:i:s') . ") ====\n";
@@ -43,7 +43,7 @@ file_put_contents('prematricula_request.log', $requestLog, FILE_APPEND);
 
 // Validação básica
 if (empty($firstName) || empty($lastName) || empty($email) || empty($phone) || 
-    empty($cpf) || empty($categoryId) || empty($poloId) || empty($studentPolo)) {
+    empty($cpf) || empty($categoryId) || empty($poloId)) {
     sendResponse(false, 'Campos obrigatórios não preenchidos');
     exit;
 }
@@ -81,7 +81,6 @@ try {
                     state = ?,
                     zipcode = ?,
                     education_level = ?,
-                    student_polo = ?,
                     updated_at = NOW()
                 WHERE id = ?
             ");
@@ -96,7 +95,6 @@ try {
                 $state,
                 $zipCode,
                 $educationLevel,
-                $studentPolo,
                 $existingPrematricula['id']
             ]);
             
@@ -122,7 +120,6 @@ try {
                     state = ?,
                     zipcode = ?,
                     education_level = ?,
-                    student_polo = ?,
                     status = 'pending',
                     updated_at = NOW()
                 WHERE id = ?
@@ -138,7 +135,6 @@ try {
                 $state,
                 $zipCode,
                 $educationLevel,
-                $studentPolo,
                 $existingPrematricula['id']
             ]);
             
@@ -153,12 +149,12 @@ try {
                 polo_id, polo_name, category_id, category_name, 
                 first_name, last_name, email, phone, cpf,
                 address, city, state, zipcode, education_level,
-                student_polo, status, created_at, updated_at
+                status, created_at, updated_at
             ) VALUES (
                 ?, ?, ?, ?, 
                 ?, ?, ?, ?, ?,
                 ?, ?, ?, ?, ?,
-                ?, 'pending', NOW(), NOW()
+                'pending', NOW(), NOW()
             )
         ");
         
@@ -176,8 +172,7 @@ try {
             $city,
             $state,
             $zipCode,
-            $educationLevel,
-            $studentPolo
+            $educationLevel
         ]);
         
         $prematriculaId = $pdo->lastInsertId();
@@ -187,7 +182,7 @@ try {
     
     // Log de sucesso no banco
     $dbLog = "==== BD SUCESSO (" . date('Y-m-d H:i:s') . ") ====\n";
-    $dbLog .= "ID: $prematriculaId | Email: $email | Tipo: $emailType | Polo Aluno: $studentPolo\n";
+    $dbLog .= "ID: $prematriculaId | Email: $email | Tipo: $emailType\n";
     $dbLog .= "==============================\n";
     file_put_contents('prematricula_db.log', $dbLog, FILE_APPEND);
     
@@ -238,8 +233,7 @@ try {
                     
                     <div style='background-color: #e8f4fc; padding: 15px; margin: 20px 0;'>
                         <h3>Informações da Pré-matrícula:</h3>
-                        <p><strong>Polo do Sistema:</strong> {$poloName}</p>
-                        <p><strong>Sua Localização:</strong> {$studentPolo}</p>
+                        <p><strong>Polo:</strong> {$poloName}</p>
                         <p><strong>Curso:</strong> {$categoryName}</p>
                     </div>
                     
@@ -311,9 +305,8 @@ try {
                         <p><strong>Nome:</strong> {$firstName} {$lastName}</p>
                         <p><strong>Email:</strong> {$email}</p>
                         <p><strong>Telefone:</strong> {$phone}</p>
-                        <p><strong>Localização do Aluno:</strong> {$studentPolo}</p>
                         <p><strong>Curso:</strong> {$categoryName}</p>
-                        <p><strong>Polo do Sistema:</strong> {$poloName}</p>
+                        <p><strong>Polo:</strong> {$poloName}</p>
                         <p><strong>ID da Pré-matrícula:</strong> {$prematriculaId}</p>
                     </div>
                     
@@ -367,7 +360,7 @@ try {
     
     // Log final de sucesso
     $successLog = "==== SUCESSO FINAL (" . date('Y-m-d H:i:s') . ") ====\n";
-    $successLog .= "ID: $prematriculaId | Aluno: $firstName $lastName | Localização: $studentPolo\n";
+    $successLog .= "ID: $prematriculaId | Aluno: $firstName $lastName\n";
     $successLog .= "Email Aluno: " . ($emailSent ? "ENVIADO ($method)" : "FALHA") . "\n";
     $successLog .= "Email Admin: " . ($adminEmailSent ? "ENVIADO ($method)" : "FALHA") . "\n";
     $successLog .= "==============================\n";

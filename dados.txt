@@ -1,0 +1,14 @@
+inscricaoava.imepedu.com.br
+imepedu-inscricaoava
+gWecRS6rGHHnzwFHY5wT
+
+inscricaoavadb
+inscricaoavauser
+05hsqwjG8vLsIVBvQ7Iu
+
+
+antigo
+$db_host = 'localhost';
+$db_name = 'inscricao';
+$db_user = 'inscricao';
+$db_pass = 'EHl20R5ahRvwF7yOP0Uv';

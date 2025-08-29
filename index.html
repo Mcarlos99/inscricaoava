@@ -584,7 +584,45 @@
     font-weight: bold;
 }
 
+/* Estilos específicos para o campo Polo do Aluno */
+.student-polo-field {
+    position: relative;
+}
 
+.student-polo-field .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    padding-right: 2.25rem;
+}
+
+.student-polo-field .form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+/* Destaque visual quando o campo polo do aluno está focado */
+.student-polo-field .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Ícone do polo no campo */
+.student-polo-field::before {
+    content: "";
+    position: absolute;
+    left: 0.75rem;
+    top: 2.2rem;
+    font-size: 1rem;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.student-polo-field .form-select {
+    padding-left: 2.5rem;
+}
     </style>
 </head>
 <body>
@@ -734,10 +772,31 @@
                         </div>
                     </div>
                     
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email*</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                        <div class="form-text">Este será seu login para acesso ao curso após aprovação.</div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email*</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="form-text">Este será seu login para acesso ao curso após aprovação.</div>
+                        </div>
+                        <div class="col-md-6 student-polo-field">
+                            <label for="studentPolo" class="form-label">Selecione seu Polo*</label>
+                            <select class="form-select" id="studentPolo" name="studentPolo" required>
+                                <option value="" selected>Selecione sua localização...</option>
+                                <option value="AVA">AVA</option>
+                                <option value="Tucuruí">Tucuruí</option>
+                                <option value="Breu Branco">Breu Branco</option>
+                                <option value="Pacajá">Pacajá</option>
+                                <option value="Novo Repartimento">Novo Repartimento</option>
+                                <option value="Igarapé-Miri">Igarapé-Miri</option>
+                                <option value="Parauapebas">Parauapebas</option>
+                                <option value="Marabá">Marabá</option>
+                                <option value="Altamira">Altamira</option>
+                                <option value="Santarém">Santarém</option>
+                                <option value="Belém">Belém</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                            <div class="form-text">Informe onde você está localizado</div>
+                        </div>
                     </div>
                     
                     <div class="row mb-3">
@@ -840,8 +899,12 @@
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
-                                <div class="col-md-4 fw-bold">Polo:</div>
+                                <div class="col-md-4 fw-bold">Sistema:</div>
                                 <div class="col-md-8" id="summaryPoloName"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4 fw-bold">Polo:</div>
+                                <div class="col-md-8" id="summaryStudentPolo"></div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4 fw-bold">Curso:</div>
@@ -863,15 +926,6 @@
                                 <div class="col-md-4 fw-bold">CPF:</div>
                                 <div class="col-md-8" id="summaryCPF"></div>
                             </div>
-                          <!-- Adicione estas linhas ao card de resumo da pré-matrícula (Step 4: Confirmation) 
-							<div class="row mb-3" id="priceSummaryRow" style="display:none;">
-    							<div class="col-md-4 fw-bold">Valor do Curso:</div>
-    							<div class="col-md-8" id="summaryPrice"></div>
-							</div>
-							<div class="row mb-3" id="installmentsSummaryRow" style="display:none;">
-    							<div class="col-md-4 fw-bold">Parcelamento:</div>
-    							<div class="col-md-8" id="summaryInstallments"></div>
-							</div>-->
                         </div>
                     </div>
                     
@@ -993,7 +1047,6 @@
 
 <script>
     // Variáveis globais
-// Variáveis globais
 let currentStep = 1;
 let selectedPoloId = null;
 let selectedPoloName = null;
@@ -1101,24 +1154,6 @@ function loadCategoriesForPolo(poloId, parentId = 0) {
                 // Limpar container
                 categoriesContainer.innerHTML = '';
                 
-/*                 // Adicionar breadcrumb apenas se for modo hierárquico e não for raiz
-                if (navigationMode === 'hierarchical' && !data.is_root) {
-                    let breadcrumbHtml = '<div class="col-12 mb-3"><nav aria-label="breadcrumb"><ol class="breadcrumb">';
-                    breadcrumbHtml += '<li class="breadcrumb-item"><a href="#" onclick="navigateBack(0)">Início</a></li>';
-                    
-                    data.breadcrumb.forEach(item => {
-                        breadcrumbHtml += `<li class="breadcrumb-item"><a href="#" onclick="navigateBack(${item.parent})">${item.name}</a></li>`;
-                    });
-                    
-                    breadcrumbHtml += '</ol></nav></div>';
-                    categoriesContainer.innerHTML = breadcrumbHtml;
-                } */
-                
-                /*// Adicionar informação do modo de navegação (apenas para debug/info)
-                if (navigationMode === 'hierarchical' && data.is_root) {
-                    categoriesContainer.innerHTML += '<div class="col-12 mb-3"><div class="alert alert-info"><small><i class="fas fa-info-circle me-2"></i>Este polo usa navegação hierárquica. Clique em uma categoria para ver os cursos disponíveis.</small></div></div>';
-                } */
-                
                 // Adicionar cada categoria
                 data.categories.forEach(category => {
                     const formattedPrice = 'R$ ' + category.price.toFixed(2).replace('.', ',');
@@ -1154,8 +1189,6 @@ function loadCategoriesForPolo(poloId, parentId = 0) {
                             <div class="course-body" data-indicator="${categoryIndicator}">
                                 <p>${category.description || (isCourse || navigationMode === 'simple' ? 'Formação completa com certificação reconhecida.' : 'Categoria com vários cursos disponíveis.')}</p>
                                 ${(navigationMode === 'simple' || isCourse) ? `
-                                // <div class="course-price">${formattedPrice}</div> 
-                                // <div class="course-installments">${category.installments}</div>
                                 <ul class="mb-3">
                                     <li>${category.duration} de duração</li>
                                     <li>Certificado incluído</li>
@@ -1262,23 +1295,12 @@ function populateSummary() {
     const lastName = document.getElementById('lastName').value;
     
     document.getElementById('summaryPoloName').textContent = selectedPoloName;
+    document.getElementById('summaryStudentPolo').textContent = document.getElementById('studentPolo').value;
     document.getElementById('summaryCourseName').textContent = selectedCategoryName;
     document.getElementById('summaryName').textContent = firstName + ' ' + lastName;
     document.getElementById('summaryEmail').textContent = document.getElementById('email').value;
     document.getElementById('summaryPhone').textContent = document.getElementById('phone').value;
     document.getElementById('summaryCPF').textContent = document.getElementById('cpf').value;
-    
-    // Adicionar preço ao resumo, se disponível
-    if (selectedCategoryPrice) {
-        const formattedPrice = 'R$ ' + parseFloat(selectedCategoryPrice).toFixed(2).replace('.', ',');
-        document.getElementById('summaryPrice').textContent = formattedPrice;
-        document.getElementById('summaryInstallments').textContent = selectedCategoryInstallments;
-        document.getElementById('priceSummaryRow').style.display = 'flex';
-        document.getElementById('installmentsSummaryRow').style.display = 'flex';
-    } else {
-        document.getElementById('priceSummaryRow').style.display = 'none';
-        document.getElementById('installmentsSummaryRow').style.display = 'none';
-    }
 }
 
 // Função para validar campos da etapa 3 (dados pessoais)
@@ -1288,7 +1310,8 @@ function validateStep3() {
         'lastName',
         'email',
         'phone',
-        'cpf'
+        'cpf',
+        'studentPolo'
     ];
     
     let isValid = true;
@@ -1391,6 +1414,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-    </script>
+</script>
 </body>
 </html>

@@ -238,8 +238,8 @@ try {
                     
                     <div style='background-color: #e8f4fc; padding: 15px; margin: 20px 0;'>
                         <h3>Informações da Pré-matrícula:</h3>
-                        <p><strong>Polo do Sistema:</strong> {$poloName}</p>
-                        <p><strong>Sua Localização:</strong> {$studentPolo}</p>
+                        <p><strong>Sistema:</strong> {$poloName}</p>
+                        <p><strong>Polo:</strong> {$studentPolo}</p>
                         <p><strong>Curso:</strong> {$categoryName}</p>
                     </div>
                     
@@ -313,7 +313,7 @@ try {
                         <p><strong>Telefone:</strong> {$phone}</p>
                         <p><strong>Localização do Aluno:</strong> {$studentPolo}</p>
                         <p><strong>Curso:</strong> {$categoryName}</p>
-                        <p><strong>Polo do Sistema:</strong> {$poloName}</p>
+                        <p><strong>Sistema:</strong> {$poloName}</p>
                         <p><strong>ID da Pré-matrícula:</strong> {$prematriculaId}</p>
                     </div>
                     

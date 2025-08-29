@@ -1942,18 +1942,13 @@ $stats = getCredentialsStats($pdo);
                                                                 <p><strong>Email:</strong> <?php echo htmlspecialchars($p['email']); ?></p>
                                                                 <p><strong>Telefone:</strong> <?php echo htmlspecialchars($p['phone']); ?></p>
                                                                 <p><strong>CPF:</strong> <?php echo htmlspecialchars($p['cpf']); ?></p>
-        
-                                                                <!-- NOVO CAMPO: Localização do Aluno -->
-                                                                <p><strong>Localização do Aluno:</strong> 
-                                                                    <span class="badge bg-info text-dark">
-                                                                    <?php echo htmlspecialchars($p['student_polo'] ?? 'Não informado'); ?>
-                                                                    </span>
-                                                                </p>
-        
                                                                 <p><strong>Endereço:</strong> <?php echo htmlspecialchars($p['address'] ?? 'Não informado'); ?></p>
                                                                 <p><strong>Cidade/Estado:</strong> <?php echo htmlspecialchars(($p['city'] ?? 'Não informado') . '/' . ($p['state'] ?? '')); ?></p>
                                                                 <p><strong>CEP:</strong> <?php echo htmlspecialchars($p['zipcode'] ?? 'Não informado'); ?></p>
                                                                 <p><strong>Escolaridade:</strong> <?php echo htmlspecialchars($p['education_level'] ?? 'Não informado'); ?></p>
+                                                            
+                                                            <!-- NOVO CAMPO: Localização do Aluno -->
+                                                            <p><strong>Polo do Aluno:</strong> <?php echo htmlspecialchars($p['student_polo'] ?? 'Não informado'); ?></p>
                                                             </div>
                                                         </div>
                                                         

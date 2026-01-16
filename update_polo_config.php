@@ -52,7 +52,7 @@ if ($update_requested) {
         'breu-branco' => [26, 27, 28, 29, 33],
         'repartimento' => [26, 27, 28, 29, 33],
         'bioquality' => [26, 27, 28, 29, 33],
-        'ava' => [26, 27, 28, 29, 33]
+        'ava' => [26, 27, 28, 29, 33, 283, 282]
     ];
     
     foreach ($polosToUpdate as $poloId => $finalCourses) {

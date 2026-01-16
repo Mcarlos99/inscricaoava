@@ -3,43 +3,49 @@
 $POLO_CONFIG = array (
   'tucurui' => 
   array (
-    'name' => 'Tucuruí',
+    'name' => 'pacaja',
     'moodle_url' => 'https://tucurui.imepedu.com.br',
     'api_token' => 'e9fc1f04b3d1c6971ac86adbb218110b',
     'description' => 'Polo de Educação Superior de Tucuruí',
     'address' => 'Av. Principal, 1234 - Centro, Tucuruí - PA',
-    'hierarchical_navigation' => true, // Navegação hierárquica - categorias > subcategorias
-    'final_course_categories' => [26, 27, 28, 29, 33, 55], // IDs dos cursos técnicos que são finais
-    'course_prices' => array(
-      26 => array( // Técnico em Enfermagem 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+    'hierarchical_navigation' => true,
+    'course_prices' => 
+    array (
+      28 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      27 => array( // Técnico em Eletromecânica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      29 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      28 => array( // Técnico em Eletrotécnica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      26 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      29 => array( // Técnico em Segurança do Trabalho
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      27 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      33 => array( // NR'S 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      33 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      'default' => array(
-          'price' => 1500.00,
-          'duration' => '12 meses',
-          'installments' => '12x de R$ 125,00',
+      'default' => 
+      array (
+        'price' => 1500.0,
+        'duration' => '12 meses',
+        'installments' => '12x de R$ 125,00',
       ),
     ),
   ),
@@ -50,38 +56,44 @@ $POLO_CONFIG = array (
     'api_token' => '0441051a5b5bc8968f3e65ff7d45c3de',
     'description' => 'Polo de Educação Superior de Breu Branco',
     'address' => 'Rua Parauapebas, 145 - Novo Horizonte, Breu Branco - PA',
-    'hierarchical_navigation' => true, // Navegação hierárquica - categorias > subcategorias
-    'final_course_categories' => [26, 27, 28, 29, 33], // IDs dos cursos técnicos que são finais
-    'course_prices' => array(
-      26 => array( // Técnico em Enfermagem 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+    'hierarchical_navigation' => true,
+    'course_prices' => 
+    array (
+      26 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      27 => array( // Técnico em Eletromecânica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      27 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      28 => array( // Técnico em Eletrotécnica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      28 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      29 => array( // Técnico em Segurança do Trabalho
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      29 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      33 => array( // NR'S 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      33 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      'default' => array(
-          'price' => 1500.00,
-          'duration' => '12 meses',
-          'installments' => '12x de R$ 125,00',
+      'default' => 
+      array (
+        'price' => 1500.0,
+        'duration' => '12 meses',
+        'installments' => '12x de R$ 125,00',
       ),
     ),
   ),
@@ -92,7 +104,7 @@ $POLO_CONFIG = array (
     'api_token' => '051a62d5f60167246607b195a9630d3b',
     'description' => 'Polo de Educação Superior de Igarapé-Miri',
     'address' => 'Tv. Principal, 890 - Centro, Igarapé-Miri - PA',
-    'hierarchical_navigation' => false, // Navegação simples - só categorias
+    'hierarchical_navigation' => false,
     'course_prices' => 
     array (
       1 => 
@@ -116,38 +128,44 @@ $POLO_CONFIG = array (
     'api_token' => '25c578c6ec5d4c1b75547ea52a6fcf7c',
     'description' => 'Polo de Educação Superior de Novo Repartimento',
     'address' => 'Centro, Novo Repartimento - PA',
-    'hierarchical_navigation' => true, // Navegação hierárquica - categorias > subcategorias
-    'final_course_categories' => [26, 27, 28, 29, 33], // IDs dos cursos técnicos que são finais
-    'course_prices' => array(
-      26 => array( // Técnico em Enfermagem 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+    'hierarchical_navigation' => true,
+    'course_prices' => 
+    array (
+      28 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      27 => array( // Técnico em Eletromecânica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      29 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      28 => array( // Técnico em Eletrotécnica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      26 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      29 => array( // Técnico em Segurança do Trabalho
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      27 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      33 => array( // NR'S 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      33 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      'default' => array(
-          'price' => 1500.00,
-          'duration' => '12 meses',
-          'installments' => '12x de R$ 125,00',
+      'default' => 
+      array (
+        'price' => 1500.0,
+        'duration' => '12 meses',
+        'installments' => '12x de R$ 125,00',
       ),
     ),
   ),
@@ -158,38 +176,44 @@ $POLO_CONFIG = array (
     'api_token' => 'a4f1bd19f54bff53ad028085c34cad48',
     'description' => 'Centro de Ensino & Consultoria',
     'address' => 'Rua Sapucaia, n36, Primavera, Parauapebas 68515-000',
-    'hierarchical_navigation' => true, // Navegação hierárquica - categorias > subcategorias
-    'final_course_categories' => [26, 27, 28, 29, 33], // IDs dos cursos técnicos que são finais
-    'course_prices' => array(
-      26 => array( // Técnico em Enfermagem 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+    'hierarchical_navigation' => true,
+    'course_prices' => 
+    array (
+      26 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      27 => array( // Técnico em Eletromecânica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      27 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      28 => array( // Técnico em Eletrotécnica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      28 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      29 => array( // Técnico em Segurança do Trabalho
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      29 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      33 => array( // NR'S 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      33 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      'default' => array(
-          'price' => 1500.00,
-          'duration' => '12 meses',
-          'installments' => '12x de R$ 125,00',
+      'default' => 
+      array (
+        'price' => 1500.0,
+        'duration' => '12 meses',
+        'installments' => '12x de R$ 125,00',
       ),
     ),
   ),
@@ -200,38 +224,56 @@ $POLO_CONFIG = array (
     'api_token' => '0c8ef233994c5ccfe22d6ed7d4e86a05',
     'description' => 'AVA - Ambiente Virtual de Aprendizagem',
     'address' => 'BRASIL',
-    'hierarchical_navigation' => true, // Navegação hierárquica - categorias > subcategorias
-    'final_course_categories' => [26, 27, 28, 29, 33, 55], // IDs dos cursos técnicos que são finais
-    'course_prices' => array(
-      26 => array( // Técnico em Enfermagem 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+    'hierarchical_navigation' => true,
+    'course_prices' => 
+    array (
+      29 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      27 => array( // Técnico em Eletromecânica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      27 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      28 => array( // Técnico em Eletrotécnica 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      26 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      29 => array( // Técnico em Segurança do Trabalho
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      28 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      33 => array( // NR'S 
-          'price' => 2500.00,
-          'duration' => '18 meses',
-          'installments' => '18x de R$ 138,89',
+      33 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
       ),
-      'default' => array(
-          'price' => 1500.00,
-          'duration' => '12 meses',
-          'installments' => '12x de R$ 125,00',
+      283 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
+      ),
+      282 => 
+      array (
+        'price' => 2500.0,
+        'duration' => '18 meses',
+        'installments' => '18x de R$ 138,89',
+      ),
+      'default' => 
+      array (
+        'price' => 1500.0,
+        'duration' => '12 meses',
+        'installments' => '12x de R$ 125,00',
       ),
     ),
   ),
@@ -246,7 +288,4 @@ $DEFAULT_COURSE_PRICES = array(
     'installments' => '6x de R$ 49,50'
   )
 );
-
-// Lista global de cursos técnicos que devem ser tratados como finais
-$GLOBAL_FINAL_COURSE_CATEGORIES = [26, 27, 28, 29, 33];
 ?>

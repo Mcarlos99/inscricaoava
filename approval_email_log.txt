@@ -1,4 +1,0 @@
-[2025-08-27 00:18:38] Tentando enviar e-mail de aprovação para: maurocarlos.ti@gmail.com | Nome: MAURO CARLOS | Login: maurocarlosti
-[2025-08-27 00:18:38] Resultado do envio para maurocarlos.ti@gmail.com: SUCESSO
-[2025-08-28 15:02:29] Tentando enviar e-mail de aprovação para: caxiasaugusto798@gmail.com | Nome: José Augusto  | Login: caxiasaugusto798
-[2025-08-28 15:02:29] Resultado do envio para caxiasaugusto798@gmail.com: SUCESSO

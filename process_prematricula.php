@@ -31,7 +31,8 @@ $categoryId = (int)$_POST['categoryId'] ?? 0;
 $categoryName = $_POST['categoryName'] ?? '';
 $poloId = $_POST['poloId'] ?? '';
 $poloName = $_POST['poloName'] ?? '';
-$studentPolo = $_POST['studentPolo'] ?? ''; // NOVO CAMPO
+$studentPolo = $_POST['studentPolo'] ?? '';
+$indicador = $_POST['indicador'] ?? ''; // ADICIONE ESTA LINHA
 
 // Registrar os dados recebidos no log (para diagnóstico)
 $requestLog = "==== REQUISIÇÃO (" . date('Y-m-d H:i:s') . ") ====\n";
@@ -71,34 +72,36 @@ try {
         // Se já existe e está pendente, atualizar os dados
         if ($existingPrematricula['status'] === 'pending') {
             $stmt = $pdo->prepare("
-                UPDATE prematriculas SET 
-                    first_name = ?,
-                    last_name = ?,
-                    phone = ?,
-                    cpf = ?,
-                    address = ?,
-                    city = ?,
-                    state = ?,
-                    zipcode = ?,
-                    education_level = ?,
-                    student_polo = ?,
-                    updated_at = NOW()
-                WHERE id = ?
-            ");
-            
-            $stmt->execute([
-                $firstName,
-                $lastName,
-                $phone,
-                $cpf,
-                $address,
-                $city,
-                $state,
-                $zipCode,
-                $educationLevel,
-                $studentPolo,
-                $existingPrematricula['id']
-            ]);
+            UPDATE prematriculas SET 
+                first_name = ?,
+                last_name = ?,
+                phone = ?,
+                cpf = ?,
+                address = ?,
+                city = ?,
+                state = ?,
+                zipcode = ?,
+                education_level = ?,
+                student_polo = ?,
+                indicador = ?,
+                updated_at = NOW()
+            WHERE id = ?
+        ");
+        
+        $stmt->execute([
+            $firstName,
+            $lastName,
+            $phone,
+            $cpf,
+            $address,
+            $city,
+            $state,
+            $zipCode,
+            $educationLevel,
+            $studentPolo,
+            $indicador, // ADICIONE AQUI
+            $existingPrematricula['id']
+        ]);
             
             $prematriculaId = $existingPrematricula['id'];
             $message = 'Pré-matrícula atualizada com sucesso';
@@ -148,37 +151,39 @@ try {
         }
     } else {
         // Inserir nova pré-matrícula
-        $stmt = $pdo->prepare("
-            INSERT INTO prematriculas (
-                polo_id, polo_name, category_id, category_name, 
-                first_name, last_name, email, phone, cpf,
-                address, city, state, zipcode, education_level,
-                student_polo, status, created_at, updated_at
-            ) VALUES (
-                ?, ?, ?, ?, 
-                ?, ?, ?, ?, ?,
-                ?, ?, ?, ?, ?,
-                ?, 'pending', NOW(), NOW()
-            )
-        ");
-        
-        $stmt->execute([
-            $poloId,
-            $poloName,
-            $categoryId,
-            $categoryName,
-            $firstName,
-            $lastName,
-            $email,
-            $phone,
-            $cpf,
-            $address,
-            $city,
-            $state,
-            $zipCode,
-            $educationLevel,
-            $studentPolo
-        ]);
+// Inserir nova pré-matrícula
+$stmt = $pdo->prepare("
+    INSERT INTO prematriculas (
+        polo_id, polo_name, category_id, category_name, 
+        first_name, last_name, email, phone, cpf,
+        address, city, state, zipcode, education_level,
+        student_polo, indicador, status, created_at, updated_at
+    ) VALUES (
+        ?, ?, ?, ?, 
+        ?, ?, ?, ?, ?,
+        ?, ?, ?, ?, ?,
+        ?, ?, 'pending', NOW(), NOW()
+    )
+");
+
+$stmt->execute([
+    $poloId,
+    $poloName,
+    $categoryId,
+    $categoryName,
+    $firstName,
+    $lastName,
+    $email,
+    $phone,
+    $cpf,
+    $address,
+    $city,
+    $state,
+    $zipCode,
+    $educationLevel,
+    $studentPolo,
+    $indicador // ADICIONE AQUI
+]);
         
         $prematriculaId = $pdo->lastInsertId();
         $message = 'Pré-matrícula enviada com sucesso';

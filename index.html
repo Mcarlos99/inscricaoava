@@ -798,6 +798,24 @@
                             <div class="form-text">Informe onde você está localizado</div>
                         </div>
                     </div>
+
+                    <!-- NOVO CAMPO: Indicador -->
+<div class="col-md-6">
+    <label for="indicador" class="form-label">Como você conheceu o IMEPEDU?</label>
+    <select class="form-select" id="indicador" name="indicador">
+        <option value="" selected>Selecione uma opção</option>
+        <option value="Redes Sociais">Redes Sociais (Instagram, Facebook, etc)</option>
+        <option value="Google/Pesquisa">Google ou pesquisa na internet</option>
+        <option value="Amigos/Familiares">Indicação de amigos ou familiares</option>
+        <option value="Carlos Diego">Carlos Diego</option>
+        <option value="Mauro Carlos">Mauro Carlos</option>
+        <option value="Vinicius de Jesus">Vinicius de Jesus</option>
+        <option value="Alan Marques">Alan Marques</option>
+        <option value="Marco Aurélio">Marco Aurélio</option>
+        <option value="Outro">Outro</option>
+    </select>
+    <div class="form-text">Nos ajude a entender como chegou até nós</div>
+</div>
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -925,6 +943,12 @@
                             <div class="row">
                                 <div class="col-md-4 fw-bold">CPF:</div>
                                 <div class="col-md-8" id="summaryCPF"></div>
+                            </div>
+                            
+                            <!-- ADICIONE ESTAS LINHAS -->
+                            <div class="row mb-3">
+                                <div class="col-md-4 fw-bold">Como conheceu:</div>
+                                <div class="col-md-8" id="summaryIndicador">Não informado</div>
                             </div>
                         </div>
                     </div>
@@ -1301,6 +1325,12 @@ function populateSummary() {
     document.getElementById('summaryEmail').textContent = document.getElementById('email').value;
     document.getElementById('summaryPhone').textContent = document.getElementById('phone').value;
     document.getElementById('summaryCPF').textContent = document.getElementById('cpf').value;
+    
+    // ADICIONE ESTAS LINHAS
+    const indicador = document.getElementById('indicador').value;
+    if (indicador) {
+        document.getElementById('summaryIndicador').textContent = indicador;
+    }
 }
 
 // Função para validar campos da etapa 3 (dados pessoais)

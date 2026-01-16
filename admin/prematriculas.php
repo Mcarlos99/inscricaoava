@@ -274,6 +274,30 @@ function getCredentialsStats($pdo) {
     }
 }
 
+/**
+ * Obter estatísticas de indicadores
+ */
+function getIndicadoresStats($pdo) {
+    try {
+        $stmt = $pdo->prepare("
+            SELECT 
+                indicador,
+                COUNT(*) as total,
+                SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) as aprovados
+            FROM prematriculas 
+            WHERE indicador IS NOT NULL AND indicador != ''
+            GROUP BY indicador
+            ORDER BY total DESC
+            LIMIT 10
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
 // ============================================================================
 // PROCESSAMENTO DE AÇÕES ESPECIAIS
 // ============================================================================
@@ -1746,6 +1770,60 @@ $stats = getCredentialsStats($pdo);
                     </div>
                 </div>
             </div>
+
+
+
+            <!-- Adicione após os cards de estatísticas (por volta da linha 1090) -->
+<div class="row mt-4 mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="m-0"><i class="fas fa-chart-bar me-2"></i>Top Indicadores</h5>
+            </div>
+            <div class="card-body">
+                <?php 
+                $indicadoresStats = getIndicadoresStats($pdo);
+                if (!empty($indicadoresStats)): 
+                ?>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Indicador</th>
+                                    <th>Total</th>
+                                    <th>Aprovados</th>
+                                    <th>Taxa de Conversão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($indicadoresStats as $stat): ?>
+                                    <tr>
+                                        <td>
+                                            <span class="badge bg-info">
+                                                <?php echo htmlspecialchars($stat['indicador']); ?>
+                                            </span>
+                                        </td>
+                                        <td><?php echo $stat['total']; ?></td>
+                                        <td><?php echo $stat['aprovados']; ?></td>
+                                        <td>
+                                            <?php 
+                                            $taxa = $stat['total'] > 0 ? round(($stat['aprovados'] / $stat['total']) * 100, 1) : 0;
+                                            echo $taxa . '%';
+                                            ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p class="text-muted mb-0">Nenhum dado de indicador disponível ainda.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
         </div>
 
         <!-- Filtros -->
@@ -1797,20 +1875,21 @@ $stats = getCredentialsStats($pdo);
                 <?php else: ?>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>Email</th>
-                                    <th>Telefone</th>
-                                    <th>Curso</th>
-                                    <th>Polo</th>
-                                    <th>Status</th>
-                                    <th>Credenciais</th>
-                                    <th>Data</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
+                        <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Curso</th>
+        <th>Polo</th>
+        <th>Status</th>
+        <th>Credenciais</th>
+        <th>Indicador</th> <!-- ADICIONE ESTA LINHA -->
+        <th>Data</th>
+        <th>Ações</th>
+    </tr>
+</thead>
                             <tbody>
                                 <?php foreach ($prematriculas as $p): ?>
                                     <tr class="<?php echo ($p['status'] === 'approved' && $p['has_credentials']) ? 'has-credentials' : ''; ?>">
@@ -1862,6 +1941,18 @@ $stats = getCredentialsStats($pdo);
                                                 <span class="badge bg-secondary">N/A</span>
                                             <?php endif; ?>
                                         </td>
+
+                                        <td>
+    <?php if (!empty($p['indicador'])): ?>
+        <small class="badge bg-info">
+            <i class="fas fa-user-friends me-1"></i>
+            <?php echo htmlspecialchars($p['indicador']); ?>
+        </small>
+    <?php else: ?>
+        <small class="text-muted">Não informado</small>
+    <?php endif; ?>
+</td>
+
                                         <td>
                                             <small><?php echo date('d/m/Y H:i', strtotime($p['created_at'])); ?></small>
                                         </td>
@@ -1946,9 +2037,8 @@ $stats = getCredentialsStats($pdo);
                                                                 <p><strong>Cidade/Estado:</strong> <?php echo htmlspecialchars(($p['city'] ?? 'Não informado') . '/' . ($p['state'] ?? '')); ?></p>
                                                                 <p><strong>CEP:</strong> <?php echo htmlspecialchars($p['zipcode'] ?? 'Não informado'); ?></p>
                                                                 <p><strong>Escolaridade:</strong> <?php echo htmlspecialchars($p['education_level'] ?? 'Não informado'); ?></p>
-                                                            
-                                                            <!-- NOVO CAMPO: Localização do Aluno -->
-                                                            <p><strong>Polo do Aluno:</strong> <?php echo htmlspecialchars($p['student_polo'] ?? 'Não informado'); ?></p>
+                                                                <p><strong>Como conheceu:</strong> <?php if (!empty($p['indicador'])) { echo '<span class="badge bg-info">' . htmlspecialchars($p['indicador']) . '</span>'; } else { echo 'Não informado'; } ?> </p>                                                            <!-- NOVO CAMPO: Localização do Aluno -->
+                                                                <p><strong>Polo do Aluno:</strong> <?php echo htmlspecialchars($p['student_polo'] ?? 'Não informado'); ?></p>
                                                             </div>
                                                         </div>
                                                         

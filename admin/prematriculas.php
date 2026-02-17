@@ -1,22 +1,16 @@
 <?php
-/**
- * ADMIN/PREMATRICULAS.PHP - VERSÃO COMPLETA COM GERENCIAMENTO DE CREDENCIAIS
- * Parte 1/4: Configurações, Conexão, Funções Auxiliares e Processamento Base
- * 
- * Funcionalidades desta versão:
- * - Armazenamento automático de credenciais do Moodle
- * - Visualização de credenciais nos detalhes
- * - Reenvio de credenciais por email
- * - Regeneração de credenciais para matrículas antigas
- * - Interface melhorada com indicadores visuais
- * - Logs detalhados de todas as ações
- */
+session_start();
 
-// Verificar se o usuário está logado como administrador
-$admin_key = $_GET['key'] ?? '';
-if ($admin_key !== 'admin123') {
-    die('Acesso não autorizado');
+// Verificar se está logado
+if (!isset($_SESSION['admin_user_id'])) {
+    header('Location: login.php');
+    exit;
 }
+
+// Carregar permissões do usuário
+$isSuperAdmin = $_SESSION['is_super_admin'];
+$allowedPoles = $_SESSION['allowed_poles'] ?? [];
+$allowedCategories = $_SESSION['allowed_categories'] ?? [];
 
 // Configurações do banco de dados - ajuste conforme seu ambiente
 $db_host = 'localhost';
@@ -1464,13 +1458,28 @@ $sql = "SELECT *,
                    WHEN moodle_username IS NOT NULL AND moodle_password IS NOT NULL THEN 1 
                    ELSE 0 
                END as has_credentials
-        FROM prematriculas";
+        FROM prematriculas WHERE 1=1";
 
 $params = [];
 
+// Filtro de status
 if ($status_filter !== 'all') {
-    $sql .= " WHERE status = ?";
+    $sql .= " AND status = ?";
     $params[] = $status_filter;
+}
+
+// Aplicar filtro de polos se não for super admin
+if (!$isSuperAdmin && !empty($allowedPoles)) {
+    $placeholders = str_repeat('?,', count($allowedPoles) - 1) . '?';
+    $sql .= " AND polo_id IN ($placeholders)";
+    $params = array_merge($params, $allowedPoles);
+}
+
+// Aplicar filtro de categorias se não for super admin
+if (!$isSuperAdmin && !empty($allowedCategories)) {
+    $placeholders = str_repeat('?,', count($allowedCategories) - 1) . '?';
+    $sql .= " AND category_id IN ($placeholders)";
+    $params = array_merge($params, $allowedCategories);
 }
 
 $sql .= " ORDER BY created_at DESC";
@@ -1481,8 +1490,8 @@ $prematriculas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Obter estatísticas
 $stats = getCredentialsStats($pdo);
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1632,12 +1641,14 @@ $stats = getCredentialsStats($pdo);
 
         .table-responsive {
             border-radius: 10px;
-            overflow: hidden;
+            overflow-x: auto;           /* ← IMPORTANTE: permite scroll horizontal */
+            -webkit-overflow-scrolling: touch; /* ← melhora scroll no iOS */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .table {
             margin-bottom: 0;
+            min-width: 1000px; /* força a tabela a ser larga → ativa o scroll */
         }
 
         .table thead th {
@@ -1647,6 +1658,11 @@ $stats = getCredentialsStats($pdo);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
         }
 
         .modal-xl {
@@ -1678,22 +1694,76 @@ $stats = getCredentialsStats($pdo);
             background-color: var(--primary-color);
         }
 
-        @media (max-width: 768px) {
+        /* =============================================
+           MELHORIAS DE RESPONSIVIDADE
+        ============================================= */
+        @media (max-width: 767.98px) {
+            .main-header {
+                padding: 1.5rem 0;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-number {
+                font-size: 1.6rem;
+            }
+
             .action-buttons {
                 flex-direction: column;
+                gap: 8px;
             }
-            
+
+            .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            .table td, .table th {
+                padding: 0.45rem !important;
+            }
+
+            /* Oculta colunas menos importantes em mobile */
+            .table th:nth-child(3),  /* Email */
+            .table td:nth-child(3),
+            .table th:nth-child(4),  /* Telefone */
+            .table td:nth-child(4),
+            .table th:nth-child(9),  /* Indicador */
+            .table td:nth-child(9) {
+                display: none;
+            }
+
+            /* Ajusta modais para telas pequenas */
+            .modal-dialog {
+                margin: 0.5rem;
+                max-width: 98%;
+            }
+
+            .modal-body {
+                font-size: 0.95rem;
+            }
+
             .stats-card {
                 margin-bottom: 1rem;
             }
-            
-            .table-responsive {
+        }
+
+        @media (max-width: 576px) {
+            .nav-pills .nav-link {
+                padding: 0.5rem 1rem;
                 font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
+  
+  
     <!-- Header Principal -->
     <div class="main-header">
         <div class="container">

@@ -36,7 +36,7 @@ if (isset($poloConfig['final_course_categories']) && is_array($poloConfig['final
     $finalCourseCategories = $GLOBAL_FINAL_COURSE_CATEGORIES;
 } else {
     // Fallback para os IDs conhecidos dos cursos técnicos
-    $finalCourseCategories = [26, 27, 28, 29, 33, 282, 283];
+    $finalCourseCategories = [27, 33, 282, 283];
 }
 
 try {
